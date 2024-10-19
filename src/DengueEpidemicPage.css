@@ -1,0 +1,182 @@
+.dengue-epidemic-page {
+    font-family: 'Poppins', sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+  
+  header {
+    background-color: #CE3838;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+  .logo img {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  .login-button {
+    background-color: white;
+    color: black;
+    padding: 10px 30px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-button:hover {
+    background-color: white;
+    color: black;
+    border-color: #0056b3;
+  }
+  
+  
+  main {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 20px;
+    font-weight: 800;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  h1::after {
+    content: '';
+    display: block;
+    width: 80%;
+    max-width: 220px;
+    height: 5px;
+    background-color: #CE3838;
+    margin: 10px auto;
+  }
+  
+  .description {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 70px;
+    width: 100%;
+  }
+  
+  .card {
+    background-color: white;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    padding: 15px;
+    width: 50%;
+  }
+  
+  .card h2 {
+    font-weight: 800;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .card ul {
+    padding-left: 20px;
+    font-size: 14px;
+  }
+  
+  .illustration img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .visuals-section {
+    text-align: center;
+    margin-top: 20px;
+    color: #CE3838;
+    font-weight: 500;
+  }
+  
+  .visuals-button {
+    background-color: #CE3838;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  @media (min-width: 768px) {
+    .content-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  
+    .info-cards {
+      width: 45%;
+    }
+  
+    .illustration {
+      width: 45%;
+    }
+  
+    .visuals-section {
+      text-align: right;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .dengue-epidemic-page {
+      max-width: 1440px;
+    }
+  
+    header {
+      padding: 20px;
+    }
+  
+    .logo img {
+      width: 60px;
+      height: 60px;
+      padding: 10px;
+    }
+  
+    .login-button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  
+    h1 {
+      font-size: 24px;
+    }
+  
+    .description {
+      font-size: 16px;
+    }
+  
+    .card h2 {
+      font-size: 20px;
+    }
+  
+    .card ul {
+      font-size: 16px;
+    }
+  }
