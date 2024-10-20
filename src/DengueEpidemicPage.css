@@ -145,9 +145,7 @@
   }
   
   @media (min-width: 1024px) {
-    .dengue-epidemic-page {
-      max-width: 1440px;
-    }
+   
   
     header {
       padding: 20px;
