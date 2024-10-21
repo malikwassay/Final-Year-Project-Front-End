@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DengueEpidemicPage from './DengueEpidemicPage';
 import LoginPage from './LoginPage';
 import DengueInfoPage from './DengueInfoPage';
-
+import Map from './Map'; // Ensure you import the Map component
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<DengueEpidemicPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dengue-info" element={<DengueInfoPage />} />
-
+        <Route path="/map" element={<Map />} />
       </Routes>
     </Router>
   );
