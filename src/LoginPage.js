@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
@@ -24,14 +24,32 @@ const LeftSide = () => {
 };
 
 const RightSide = () => {
-  const navigate = useNavigate(); // Hook to access the navigation function
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login logic here (e.g., validation)
-    
-    // If login is successful, navigate to the DengueInfoPage
-    navigate('/dengue-info'); // Navigate to the DengueInfoPage
+    setError('');
+
+    if (formData.email === 'Admin@admin.com' && formData.password === 'Admin123') {
+      // Successful login
+      navigate('/dengue-info');
+    } else {
+      // Failed login
+      setError('Invalid email or password');
+    }
   };
 
   return (
@@ -42,13 +60,29 @@ const RightSide = () => {
           <span className="in">In</span>
         </h2>
 
+        {error && <div className="error-message">{error}</div>}
+
         <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" placeholder="ENTER USERNAME" />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="ENTER EMAIL"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" placeholder="ENTER PASSWORD" />
+          <input
+            type="password"
+            id="password"
+            placeholder="ENTER PASSWORD"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="forgot-password">
           <a href="/">Forgot Password?</a>
@@ -58,5 +92,4 @@ const RightSide = () => {
     </div>
   );
 };
-
 export default LoginPage;

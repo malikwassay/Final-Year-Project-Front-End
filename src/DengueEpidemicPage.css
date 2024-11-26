@@ -30,6 +30,7 @@ header {
   font-size: 16px;
   font-weight: bold;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 46px 123px;
 }
 
 .login-button:hover {
@@ -146,9 +147,6 @@ h1::after {
 }
 
 @media (min-width: 1024px) {
-  .dengue-epidemic-page {
-    max-width: 1440px;
-  }
 
   header {
     padding: 20px;

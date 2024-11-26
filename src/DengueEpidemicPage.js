@@ -9,13 +9,17 @@ const DengueEpidemicPage = () => {
     navigate('/login');
   };
 
+  const handleVisualsClick = () => {
+    navigate('/map');  
+  };
+
   return (
     <div className="dengue-epidemic-page">
       <header>
         <div className="logo">
           <img src="/images/mosquito-icon.png" alt="Mosquito icon" />
         </div>
-        <button className=" login-button " onClick={handleLoginClick}>Login</button>
+        <button className="login-button" onClick={handleLoginClick}>Login</button>
       </header>
       
       <main>
@@ -55,7 +59,7 @@ const DengueEpidemicPage = () => {
         
         <div className="visuals-section">
           <p>To get visuals, click below</p>
-          <button className="visuals-button">VISUALS →</button>
+          <button className="visuals-button" onClick={handleVisualsClick}>VISUALS →</button>
         </div>
       </main>
     </div>
