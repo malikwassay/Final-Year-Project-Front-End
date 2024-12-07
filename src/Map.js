@@ -39,7 +39,6 @@ const styles = {
     boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)'
   },
   
-  // City-specific styles
   iquitos: {
     color: '#2a4365',
     backgroundColor: '#ebf8ff'
@@ -103,6 +102,10 @@ const center = {
 const cities = [
   { name: "Iquitos", location: { lat: -3.75, lng: -73.25 }, weight: 1 },
   { name: "San Juan", location: { lat: -14.689663908, lng: -74.121166182 }, weight: 0 },
+  { name: "Lima", location: { lat: -12.0464, lng: -77.0428 }, weight: 0 },
+  { name: "Cajamarca", location: { lat: -7.1558, lng: -78.5167 }, weight: 0 },
+  { name: "Pucallpa", location: { lat: -8.3791, lng: -74.5539 }, weight: 0 },
+  { name: "Tarapoto", location: { lat: -6.4969, lng: -76.3600 }, weight: 0 }
 ];
 
 const libraries = ["places", "visualization"];
@@ -113,7 +116,13 @@ const Map = () => {
   const [mapCenter, setMapCenter] = useState(center);
   const [location, setLocation] = useState('');
   const [error, setError] = useState(null);
-  const [caseCounts, setCaseCounts] = useState({ iquitos: 0, sanjuan: 0 });
+  const [caseCounts, setCaseCounts] = useState({
+    iquitos: 0,
+    lima: 0,
+    cajamarca: 0,
+    pucallpa: 0,
+    tarapoto: 0
+  });
   const [mapInstance, setMapInstance] = useState(null);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -129,40 +138,33 @@ const Map = () => {
   }, []);
 
   const fetchPredictions = useCallback(async () => {
-    // Only fetch if Google Maps API is loaded
     if (!isLoaded || !window.google) {
       return;
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/predict_both');
-      const { iquitos, sanjuan } = response.data;
+      const response = await axios.post('http://127.0.0.1:5000/predict_all');
+      const data = response.data;
 
       const heatmapPoints = [];
-      let iquitosMax = 0;
-      let sanjuanMax = 0;
-      
-      if (iquitos?.real_time) {
-        iquitosMax = Math.max(...iquitos.real_time);
-        if (iquitosMax > 12) {
-          heatmapPoints.push({
-            location: new window.google.maps.LatLng(cities[0].location.lat, cities[0].location.lng),
-            weight: iquitosMax
-          });
-        }
-      }
+      const newCaseCounts = {};
 
-      if (sanjuan?.real_time) {
-        sanjuanMax = Math.max(...sanjuan.real_time);
-        if (sanjuanMax > 20) {
-          heatmapPoints.push({
-            location: new window.google.maps.LatLng(cities[1].location.lat, cities[1].location.lng),
-            weight: sanjuanMax
-          });
-        }
-      }
+      cities.filter(city => city.name !== "San Juan").forEach(city => {
+        const cityData = data[city.name.toLowerCase()];
+        if (cityData?.real_time) {
+          const maxCases = Math.max(...cityData.real_time);
+          newCaseCounts[city.name.toLowerCase()] = maxCases;
 
-      setCaseCounts({ iquitos: iquitosMax, sanjuan: sanjuanMax });
+          if (maxCases > 25) {
+            heatmapPoints.push({
+              location: new window.google.maps.LatLng(city.location.lat, city.location.lng),
+              weight: maxCases
+            });
+          }
+        }
+      });
+
+      setCaseCounts(newCaseCounts);
       setHeatmapData(heatmapPoints);
       setError(null);
     } catch (error) {
@@ -172,7 +174,6 @@ const Map = () => {
   }, [isLoaded]);
 
   useEffect(() => {
-    // Only set up interval if Google Maps API is loaded
     if (!isLoaded) return;
 
     const timer = setInterval(fetchPredictions, 60000);
@@ -221,22 +222,30 @@ const Map = () => {
       <div style={styles.card}>
         <h2 style={styles.cardHeader}>Dengue Cases</h2>
         <div>
-          <div style={{...styles.caseBox, ...styles.iquitos}}>
-            <h3 style={{fontWeight: 600}}>Iquitos</h3>
-            <p style={styles.caseCount}>{caseCounts.iquitos}</p>
-          </div>
-          <div style={{...styles.caseBox, ...styles.sanJuan}}>
-            <h3 style={{fontWeight: 600}}>San Juan</h3>
-            <p style={styles.caseCount}>{caseCounts.sanjuan}</p>
-          </div>
+          {cities.filter(city => city.name !== "San Juan").map(city => ( // Filter out San Juan here as well
+            <div 
+              key={city.name}
+              style={{
+                ...styles.caseBox,
+                backgroundColor: '#ebf8ff',
+                color: '#2a4365'
+              }}
+            >
+              <h3 style={{fontWeight: 600}}>{city.name}</h3>
+              <p style={styles.caseCount}>
+                {caseCounts[city.name.toLowerCase().replace(' ', '')]}
+              </p>
+            </div>
+          ))}
           <div style={{...styles.caseBox, ...styles.total}}>
             <h3 style={{fontWeight: 600}}>Total Cases</h3>
             <p style={styles.caseCount}>
-              {caseCounts.iquitos + caseCounts.sanjuan}
+              {Object.values(caseCounts).reduce((a, b) => a + b, 0)}
             </p>
           </div>
         </div>
       </div>
+      
       <div style={{flex: 1}}>
         <form onSubmit={handleLocationSubmit} style={styles.form}>
           <input
@@ -257,15 +266,11 @@ const Map = () => {
           center={mapCenter}
           onLoad={onLoad}
         >
-          {cities.map((city, index) => (
+          {cities.filter(city => city.name !== "San Juan").map((city, index) => ( // Filter out San Juan
             <Marker
               key={index}
               position={city.location}
               onClick={() => setSelectedCity(city)}
-              visible={
-                (city.name === "Iquitos" && city.weight > 12) || 
-                (city.name === "San Juan" && city.weight > 20)
-              }
             />
           ))}
           {selectedCity && (
@@ -275,7 +280,7 @@ const Map = () => {
             >
               <div>
                 <h2>{selectedCity.name}</h2>
-                <p>Dengue Intensity: {selectedCity.weight}</p>
+                <p>Dengue Cases: {caseCounts[selectedCity.name.toLowerCase().replace(' ', '')]}</p>
               </div>
             </InfoWindow>
           )}

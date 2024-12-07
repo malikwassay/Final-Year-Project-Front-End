@@ -43,7 +43,7 @@ const RightSide = () => {
     e.preventDefault();
     setError('');
 
-    if (formData.email === 'Admin@admin.com' && formData.password === 'Admin123') {
+    if ( (formData.email === 'Admin@admin.com' && formData.password === 'Admin123') || (formData.email === 'Malikwassay6@gmail.com' && formData.password === 'Wassay123') ) {
       // Successful login
       navigate('/dengue-info');
     } else {

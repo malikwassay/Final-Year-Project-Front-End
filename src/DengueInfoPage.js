@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './DengueInfoPage.css';
 
 const DengueInfoPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleVisualsClick = () => {
-    navigate('/map'); // Navigate to the map page
+    navigate('/map');
+  };
+
+  const handleGraphsClick = () => {
+    navigate('/predictions');
   };
 
   return (
@@ -17,9 +21,7 @@ const DengueInfoPage = () => {
         </div>
         <div className="user-info">
           <div className="user-avatar">
-            <img src="/images/user.png" alt="User avatar" />
           </div>
-          <span className="user-name">Wassay Haider</span>
         </div>
       </header>
       
@@ -37,7 +39,7 @@ const DengueInfoPage = () => {
             Visuals
             <span className="arrow">→</span>
           </button>
-          <button className="btn graphs">
+          <button className="btn graphs" onClick={handleGraphsClick}>
             Graphs
             <span className="arrow">→</span>
           </button>

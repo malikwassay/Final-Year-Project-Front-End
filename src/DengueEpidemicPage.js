@@ -24,35 +24,35 @@ const DengueEpidemicPage = () => {
       
       <main>
         <h1>Dengue Epidemic</h1>
-        <p className="description">a mosquito-borne tropical disease caused by dengue virus.</p>
+        <p className="description">A mosquito-borne tropical disease caused by dengue virus.</p>
         
         <div className="content-wrapper">
           <div className="info-cards">
             <div className="card symptoms">
               <h2>Symptoms</h2>
               <ul>
-                <li>high fever (40°C/104°F)</li>
-                <li>severe headache</li>
-                <li>pain behind the eyes</li>
-                <li>muscle and joint pains</li>
-                <li>nausea</li>
-                <li>vomiting</li>
-                <li>swollen glands</li>
-                <li>rash</li>
+                <li>High fever (40°C/104°F)</li>
+                <li>Severe headache</li>
+                <li>Pain behind the eyes</li>
+                <li>Muscle and joint pains</li>
+                <li>Nausea</li>
+                <li>Vomiting</li>
+                <li>Swollen glands</li>
+                <li>Rash</li>
               </ul>
             </div>
             <div className="card prevention">
               <h2>Prevention</h2>
               <ul>
-                <li>clothes that cover as much of your body as possible</li>
-                <li>mosquito nets if sleeping during the day, ideally nets sprayed with insect repellent</li>
-                <li>window screens</li>
-                <li>mosquito repellents</li>
-                <li>coils and vaporizers</li>
+                <li>Clothes that cover as much of your body as possible</li>
+                <li>Mosquito nets if sleeping during the day, ideally nets sprayed with insect repellent</li>
+                <li>Window screens</li>
+                <li>Mosquito repellents</li>
+                <li>Coils and Vaporizers</li>
               </ul>
             </div>
           </div>
-          <div className="illustration">
+          <div className="illustrations">
             <img src="/images/dengue-illustration.png" alt="Dengue illustration" />
           </div>
         </div>

@@ -95,9 +95,9 @@ h1 {
 }
 
 .illustration img {
-  padding-right: 300px;
-  width: 480px;
-  height: 335px;
+  max-width: 100%;
+  height: auto;
+  margin-left: 236px;
 }
 
 .buttons {
